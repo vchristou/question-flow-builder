@@ -1,11 +1,17 @@
 
 import { QuestionsResponse, Question } from '../types/questionnaire';
+import { mockQuestions } from '../mocks/mockQuestions';
 
 const API_URL = 'https://www.doctoranytime.gr/searchq/GetQuestions?version=v2';
 const BASE_RESULT_URL = 'https://www.doctoranytime.gr/s/Psychologos';
 
 export async function fetchQuestions(): Promise<Question[]> {
   try {
+    // For development: use mock data to avoid CORS issues
+    console.log('Using mock questions data');
+    return mockQuestions;
+    
+    /* Commented out the real API call due to CORS issues
     const response = await fetch(API_URL);
     
     if (!response.ok) {
@@ -14,6 +20,7 @@ export async function fetchQuestions(): Promise<Question[]> {
     
     const data: QuestionsResponse = await response.json();
     return data.Data;
+    */
   } catch (error) {
     console.error('Error fetching questions:', error);
     throw error;
